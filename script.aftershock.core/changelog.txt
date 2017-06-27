@@ -1,6 +1,5 @@
-AftershockCore v1.0.3
---------------------------------
-- Updated supported hosts
-- Updated Metadata Handling
+- [COLOR orange]NOTE: Aftershock is back online [/COLOR]
 
-Initial Version
+Aftershock v2.0.0
+--------------------------------
+- Migrated from TVADDONS
