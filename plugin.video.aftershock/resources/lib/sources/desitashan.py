@@ -44,7 +44,7 @@ class source:
 
     def episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
 
-        query = {'imdb': imdb, 'title': title}
+        query = {'imdb': url, 'title': title}
         query = urllib.urlencode(query)
 
         #query = '%s %s' % (imdb, title)

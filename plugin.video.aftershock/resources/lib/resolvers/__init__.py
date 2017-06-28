@@ -51,6 +51,8 @@ def request(url, resolverList=None):
         if hmf.valid_url() == True: url = hmf.resolve()
         else: url = False
     except:
+        import traceback
+        traceback.print_exc()
         pass
 
     try: headers = url.rsplit('|', 1)[1]
@@ -75,15 +77,11 @@ def info():
     return [
         {'class': 'desiflicks', 'host': ['desiflicks.com']}
         , {'class': 'playwire', 'host': ['playwire.com']}
-        #, {'class': 'vidshare', 'host': ['vidshare.us', 'idowatch.us', 'tvlogy.to',  'speedplay.pw', 'speedwatch.us', 'vidwatch.me' ]}
         , {'class': 'xpressvids', 'host': ['xpressvids']}
-        #, {'class': 'playu', 'host': ['playu.net']}
         , {'class': 'apnasave', 'host': ['apnasave.in']}
-        #, {'class': 'filmywap', 'host': ['storeinusa.com']}
         , {'class': 'ditto', 'host': ['dittotv.com']}
         , {'class': 'dynns', 'host': ['dynns.com']}
         , {'class': 'dailymotion', 'host': ['dailymotion.com']}
-        #, {'class': 'watchify', 'host': ['watchify.net']}
         , {'class': 'goflicker', 'host': ['goflicker.com']}
-        , {'class': 'genericresolver', 'host': ['playu.net', 'watchify.com', 'watchvideo13.us', 'vidwatch.me','vidshare.us', 'idowatch.us', 'tvlogy.to',  'speedplay.pw', 'speedwatch.us', 'embedupload.com']}
+        , {'class': 'genericresolver', 'host': ['playu.net', 'watchify.com', 'watchvideo13.us', 'vidwatch.me','vidshare.us', 'idowatch.us', 'tvlogy.to',  'speedplay.pw', 'speedwatch.us', 'embedupload.com', 'fifastop.com']}
     ]

@@ -42,7 +42,6 @@ class source:
 
     def tvshow(self, tvshowurl, imdb, tvdb, tvshowtitle, year):
         if tvshowurl:
-
             return tvshowtitle
 
     def episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):

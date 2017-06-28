@@ -319,5 +319,69 @@ class TestingLive(unittest.TestCase):
             print item
         print ""
 
+class TestingTVVOD(unittest.TestCase):
+    def setUp(self):
+        self.tvshowurl = 'threads/1058940-Yeh-Rishta-Kya-Kehlata-Hai-27th-June-2017-Watch-Online?s=ace828036edaeec948fd26d0b65ff66c'
+        self.imdb = '0'
+        self.tvdb = '0'
+        self.tvshowtitle = 'Yeh Rishta Kya Kehlata Hai'
+        self.title = '27th June 2017'
+        self.year = '0'
+        self.url = None
+        self.season = '0'
+        self.episode = '0'
+        self.date = '0'
+
+
+    def source(self, call):
+        tvshowUrl = call.tvshow(self.tvshowurl, self.imdb, self.tvdb, self.tvshowtitle, self.year)
+        self.assertIsNotNone(tvshowUrl, 'TVShow URL Not Found')
+        logger.debug('[%s] TVShow URL : %s' % (call.__class__, tvshowUrl))
+
+
+        epUrl = call.episode(tvshowUrl, self.tvshowurl, self.imdb, self.tvdb, self.title, self.date, self.season, self.episode)
+        self.assertIsNotNone(epUrl, 'Episode URL Not Found')
+        logger.debug('[%s] Episode URL : %s' % (call.__class__, epUrl))
+
+        sourceurl = call.sources(epUrl)
+        self.assertGreater(len(sourceurl), 0, 'No Sources found')
+
+    def test_badtameezdil(self):
+        from resources.lib.sources import badtameezdil
+        call = badtameezdil.source()
+        self.source(call)
+
+    def test_desiplex(self):
+        from resources.lib.sources import desiplex
+        call = desiplex.source()
+        self.source(call)
+
+    def test_desirulez(self):
+        from resources.lib.sources import desirulez
+        call = desirulez.source()
+        self.source(call)
+
+    def test_desitashan(self):
+        from resources.lib.sources import desitashan
+        call = desitashan.source()
+        self.source(call)
+
+    def test_fifastop(self):
+        from resources.lib.sources import fifastop
+        call = fifastop.source()
+        self.source(call)
+
+    def test_tdesihit(self):
+        from resources.lib.sources import tdesihit
+        call = tdesihit.source()
+        self.source(call)
+
+    def test_yodesi(self):
+        from resources.lib.sources import yodesi
+        call = yodesi.source()
+        self.source(call)
+
+
+
 if __name__ == '__main__' :
     unittest.main()

@@ -40,6 +40,7 @@
 		<setting id="provider.dynns" type="bool" label="Dynns" default="true" />
 		<setting id="provider.einthusan" type="bool" label="Einthusan" default="true" />
 		<setting id="provider.filmywap" type="bool" label="FilmyWap" default="true" />
+		<setting id="provider.fifastop" type="bool" label="FifaStop" default="true" />
 		<setting id="provider.hdbuffer" type="bool" label="HDBuffer" default="true" />
 		<setting id="provider.hevcfilm" type="bool" label="HEVC" default="true" />
 		<setting id="provider.hindilinks4u" type="bool" label="HindiLinks4U" default="true" />

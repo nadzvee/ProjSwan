@@ -44,28 +44,6 @@ class source:
             return
 
 
-    def tvshow(self, imdb, tvdb, tvshowtitle, year):
-        try:
-            url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
-            url = urllib.urlencode(url)
-            return url
-        except:
-            return
-
-
-    def episode(self, url, imdb, tvdb, title, premiered, season, episode):
-        try:
-            if url == None: return
-
-            url = urlparse.parse_qs(url)
-            url = dict([(i, url[i][0]) if url[i] else (i, '') for i in url])
-            url['title'], url['premiered'], url['season'], url['episode'] = title, premiered, season, episode
-            url = urllib.urlencode(url)
-            return url
-        except:
-            return
-
-
     def sources(self, url):
         try:
             srcs = []

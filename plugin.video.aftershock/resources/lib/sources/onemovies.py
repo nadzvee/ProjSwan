@@ -75,53 +75,6 @@ class source:
             return
 
 
-    def tvshow(self, imdb, tvdb, tvshowtitle, year):
-        try:
-            url = {'imdb': imdb, 'tvdb': tvdb, 'tvshowtitle': tvshowtitle, 'year': year}
-            url = urllib.urlencode(url)
-            return url
-        except:
-            return
-
-
-    def episode(self, url, imdb, tvdb, title, premiered, season, episode):
-        try:
-            data = urlparse.parse_qs(url)
-            data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])
-
-            t = cleantitle.get(data['tvshowtitle'])
-            year = re.findall('(\d{4})', premiered)[0]
-            years = [str(year), str(int(year)+1), str(int(year)-1)]
-            season = '%01d' % int(season)
-            episode = '%01d' % int(episode)
-
-            headers = {'X-Requested-With': 'XMLHttpRequest'}
-
-            query = urllib.urlencode({'keyword': '%s - Season %s' % (data['tvshowtitle'], season)})
-
-            url = urlparse.urljoin(self.base_link, self.search_link)
-
-            r = client.request(url, post=query, headers=headers)
-
-            r = json.loads(r)['content']
-            r = zip(client.parseDOM(r, 'a', ret='href', attrs = {'class': 'ss-title'}), client.parseDOM(r, 'a', attrs = {'class': 'ss-title'}))
-            r = [(i[0], re.findall('(.+?) - season (\d+)$', i[1].lower())) for i in r]
-            r = [(i[0], i[1][0][0], i[1][0][1]) for i in r if len(i[1]) > 0]
-            r = [i for i in r if t == cleantitle.get(i[1])]
-            r = [i[0] for i in r if season == '%01d' % int(i[2])][:2]
-            r = [(i, re.findall('(\d+)', i)[-1]) for i in r]
-
-            for i in r:
-                try:
-                    y, q = cache.get(self.onemovies_info, 9000, i[1])
-                    if not y in years: raise Exception()
-                    return urlparse.urlparse(i[0]).path + '?episode=%01d' % int(episode)
-                except:
-                    pass
-        except:
-            return
-
-
     def onemovies_info(self, url):
         try:
             u = urlparse.urljoin(self.base_link, self.info_link)

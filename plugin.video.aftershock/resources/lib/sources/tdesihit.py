@@ -38,7 +38,7 @@ class source:
             return tvshowtitle
 
     def episode(self, url, ep_url, imdb, tvdb, title, date, season, episode):
-        query = '%s %s' % (imdb, title)
+        query = '%s %s' % (url, title)
 
         post = urllib.urlencode({'action': 'td_ajax_search', 'td_string':query})
         url = urlparse.urljoin(self.base_link, self.search_link)

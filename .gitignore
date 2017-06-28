@@ -1,15 +1,8 @@
-/.idea
-/aftershock-repo.iml
+
 *.pyo
 *.pyc
 
 *.iml
-**/.idea/*
 **/data/*
 *.db
 settings.xml.local
-*.iml
-aftershock-repo.iml
-.idea/modules.xml
-.idea/modules.xml
-.idea/misc.xml
