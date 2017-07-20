@@ -61,7 +61,7 @@ class navigator:
         self.endDirectory()
 
     def donation(self, version):
-        #control.okDialog("Aftershock Offline", "", "In light of recent events i have decided to no maintaine or support Aftershock addon.")
+        control.okDialog("Aftershock No Longer supported", "", "Aftershock is no longer supported. Please install Swa-DESI from Aftershock to continue enjoying Indian content.")
         return 1
 
     def clearCache(self, url=None):
