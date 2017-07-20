@@ -1,0 +1,95 @@
+import re
+import urllib
+import urlparse
+
+from aftershock.common import cleantitle, client, logger, workers
+from ..scraper import Scraper
+
+
+class ApnaView(Scraper):
+    domains = ['apnaview.com']
+    name = "apnaview"
+
+    def __init__(self):
+        self.base_link = 'http://www.apnaview.com'
+        self.search_link = '/browse?q=%s'
+        self.srcs = []
+
+    def scrape_movie(self, title, year, imdb, debrid = False):
+        try:
+            query = self.search_link % (urllib.quote_plus(title))
+            query = urlparse.urljoin(self.base_link, query)
+            cleanedTitle = cleantitle.get(title)
+
+            result = client.request(query)
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = client.parseDOM(result, "div", attrs={"class": "row"})
+
+            for item in result:
+                linkTitle = client.parseDOM(item, "span", attrs={"class": "title"})[0]
+                try :
+                    parsed = re.compile('(.+?) (\d{4}) ').findall(linkTitle)[0]
+                    parsedTitle = parsed[0]
+                    parsedYears = parsed[1]
+                except: pass
+                if cleanedTitle == cleantitle.get(parsedTitle) and year == parsedYears:
+                    url = client.parseDOM(item, "a", ret="href")[0]
+                    return self.sources(client.replaceHTMLCodes(url))
+        except Exception as e:
+            logger.error('[%s] Exception : %s' % (self.__class__, e))
+        return []
+
+    def sources(self, url):
+        logger.debug('SOURCES URL %s' % url, __name__)
+        try:
+            if url == None: return self.srcs
+
+            url = '%s%s' % (self.base_link, url)
+
+            try: result = client.request(url)
+            except: result = ''
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = result.replace('\n','').replace('\t','')
+            result = client.parseDOM(result, "table", attrs={"class": "table table-bordered"})[0]
+            result = client.parseDOM(result, "tbody")[0]
+            result = client.parseDOM(result, "tr")
+
+            threads = []
+            for item in result:
+                threads.append(workers.Thread(self.source, item))
+
+            [i.start() for i in threads]
+
+            stillWorking = True
+
+            while stillWorking:
+                stillWorking = False
+                stillWorking = [True for x in threads if x.is_alive() == True]
+            logger.debug('SOURCES [%s]' % self.srcs, __name__)
+            return self.srcs
+        except :
+            return self.srcs
+
+    def source(self, item):
+        quality = ''
+        try :
+            urls = client.parseDOM(item, "a", ret="href")
+            for i in range(0, len(urls)):
+                uResult = client.request(urls[i], mobile=False)
+                uResult = uResult.replace('\n','').replace('\t','')
+                if 'Could not connect to mysql! Please check your database' in uResult:
+                    uResult = client.request(urls[i], mobile=True)
+
+                item = client.parseDOM(uResult, "div", attrs={"class": "videoplayer"})[0]
+                item = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
+                urls[i] = item
+            host = client.host(urls[0])
+            if len(urls) > 1:
+                url = "##".join(urls)
+            else:
+                url = urls[0]
+            self.srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'scraper': self.name, 'url': url, 'direct':False})
+        except :
+            pass

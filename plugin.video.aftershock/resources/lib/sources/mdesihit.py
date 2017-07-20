@@ -45,6 +45,8 @@ class source:
 
             result = client.request(query)
 
+            if result == '':
+                return
             result = result.decode('iso-8859-1').encode('utf-8')
             result = result.split("\n")
 

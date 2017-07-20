@@ -1,0 +1,96 @@
+import re
+import urllib
+import urlparse
+
+from aftershock.common import cleantitle, client, logger
+from ..scraper import Scraper
+
+
+class DesiHit(Scraper):
+    domains = ['desihit.net']
+    name = "desihit"
+
+    def __init__(self):
+        self.base_link = 'http://www.desihit.net'
+        self.search_str_link = '/front/search.php?q=%s'
+        self.search_link = '/front/controller.php?action=searchthis&searchbox=%s'
+        self.movie_link = '/front/controller.php?action=showMovieDetail&movieId=%s'
+        self.sort_link = '&order=desc&sort=date'
+        self.langMap = {'hindi':'hi', 'tamil':'ta', 'telugu':'te','ml':'malayalam', 'kn':'kannada', 'bn':'bengali', 'mr':'marathi', 'pa':'punjabi'}
+        self.srcs = []
+
+    def scrape_movie(self, title, year, imdb, debrid = False):
+        try:
+            query = '%s (%s)' % (title, year)
+            query = self.search_str_link % (urllib.quote_plus(query))
+            query = urlparse.urljoin(self.base_link, query)
+
+            result = client.request(query)
+
+            if result == '' or result == None:
+                raise Exception('No Search String Found')
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = result.split("\n")
+
+            searchString = result[0]
+            query = self.search_link % urllib.quote_plus(searchString)
+            query = urlparse.urljoin(self.base_link, query)
+            result = client.request(query)
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+
+            url = re.compile('movieId=(\d+)').findall(result)[0]
+
+            return self.sources(client.replaceHTMLCodes(url))
+        except Exception as e:
+            logger.error('[%s] Exception : %s' % (self.__class__, e))
+            pass
+        return []
+
+    def sources(self, url):
+        logger.debug('SOURCES URL %s' % url, __name__)
+        try:
+            srcs = []
+
+            if url == None: return srcs
+
+            url = self.movie_link % url
+            url = urlparse.urljoin(self.base_link, url)
+
+            result = client.request(url, referer=url)
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+            result = result.replace('\n','').replace('\t','')
+
+            result = client.parseDOM(result, "div", attrs={"class": "movierip"})
+
+            for item in result:
+                try :
+                    urls = client.parseDOM(item, "a", ret="href")
+                    quality = client.parseDOM(item, "a")[0]
+                    quality = quality.lower()
+                    if "scr rip" in quality:
+                        quality = "SCR"
+                    elif "dvd" in quality :
+                        quality = "HD"
+                    else:
+                        quality = "CAM"
+
+                    for i in range(0, len(urls)):
+                        urls[i] = client.urlRewrite(urls[i])
+
+                    host = client.host(urls[0])
+
+                    if len(urls) > 1:
+                        url = "##".join(urls)
+                    else:
+                        url = urls[0]
+
+                    srcs.append({'source': host, 'parts' : str(len(urls)), 'quality': quality, 'scraper': self.name, 'url': url, 'direct':False})
+                except :
+                    pass
+            logger.debug('SOURCES [%s]' % srcs, __name__)
+            return srcs
+        except:
+            return srcs
