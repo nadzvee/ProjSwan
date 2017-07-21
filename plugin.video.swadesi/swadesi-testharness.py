@@ -149,7 +149,8 @@ try :
 
     from resources.lib.indexers import tvshows
     #tvshows.tvshows().get(url, provider=provider, network=name)
-
+    from resources.lib import resolvers
+    resolvers.request('http://vidoza.net/embed-fl50hg5qg9gz.html')
     from resources.lib.resolvers import vidshare
     #url = 'http://vidwatch.me/embed-6e7dtnacfi3o.html'
     #url = 'http://speedwatch.us/embed-x5ic8dqzpcpy.html'

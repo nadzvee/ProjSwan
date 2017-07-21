@@ -67,8 +67,6 @@ def resolve(url, allowDebrid=False):
         if hmf.valid_url() == True: url = hmf.resolve()
         else: url = False
     except:
-        import traceback
-        traceback.print_exc()
         pass
 
     try: headers = url.rsplit('|', 1)[1]
