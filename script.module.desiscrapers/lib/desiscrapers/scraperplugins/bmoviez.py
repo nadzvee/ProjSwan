@@ -12,7 +12,7 @@ class BMoviez(Scraper):
 
     def __init__(self):
         self.base_link = 'http://www.best-moviez.ws'
-        self.search_link = '/search/%s/feed/rss2/'
+        self.search_link = '/feed/rss2/?s=%s'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):

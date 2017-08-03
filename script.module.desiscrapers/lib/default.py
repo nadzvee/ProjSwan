@@ -454,4 +454,5 @@ def profile_scrapers(profile_type):
 
 
 if __name__ == '__main__':
+    desiscrapers._update_settings_xml()
     main()

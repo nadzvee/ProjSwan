@@ -14,7 +14,7 @@ class PutLocker(Scraper):
     name = "putlocker"
 
     def __init__(self):
-        self.base_link = 'http://cartoonhd.website'
+        self.base_link = 'http://cartoonhd.global'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):

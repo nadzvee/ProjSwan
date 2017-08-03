@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.aftershock" name="Aftershock" version="5.0.2" provider-name="AftershockPY">
+<addon id="plugin.video.aftershock" name="Aftershock" version="2017.07.10" provider-name="AftershockPY">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
         <import addon="repository.aftershock" version="3.0.0"/>
@@ -34,7 +34,7 @@
 <addon id="plugin.video.swadesi" name="Swa-DESI" version="2017.07.10" provider-name="AftershockPY">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
-        <import addon="repository.aftershock" version="3.0.0"/>
+        <import addon="repository.aftershock" version="2017.07.10"/>
         <import addon="script.module.aftershock.common"/>
         <import addon="script.aftershock.artwork"/>
         <import addon="script.module.desiscrapers" />
@@ -111,7 +111,7 @@
   </extension>
 </addon>
 
-<addon id="script.aftershocknow.guide" name="Aftershock Now" version="2.0.0" provider-name="AftershockPY">
+<addon id="script.aftershocknow.guide" name="Aftershock Now" version="2017.07.10" provider-name="AftershockPY">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.simplejson" version="3.3.0"/>
@@ -130,6 +130,7 @@
         <forum></forum>
         <website></website>
 		<email></email>
+		<broken>deprecated</broken>
 	</extension>
 </addon>
 
@@ -148,7 +149,7 @@
   </extension>
 </addon>
 
-<addon id="script.module.desiscrapers" name="Desi Scrapers" version="2017.07.10" provider-name="AftershockPY">
+<addon id="script.module.desiscrapers" name="Desi Scrapers" version="2017.08.03" provider-name="AftershockPY">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.beautifulsoup" version="3.2.1"/>
