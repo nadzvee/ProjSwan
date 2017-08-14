@@ -16,9 +16,10 @@ class DesiRulez(Scraper):
     def scrape_movie(self, title, year, imdb, debrid = False):
         try:
             movies = cache.get(self.desiRulezCache, 168)
-            url = [i['url'] for i in movies if cleantitle.get(i['title']) == cleantitle.get(title)][0]
+            url = [i['url'] for i in movies if cleantitle.get(i['title'].decode('UTF-8')) == cleantitle.get(title)]
             return self.sources(client.replaceHTMLCodes(url))
-        except:
+        except Exception as e:
+            logger.error(e)
             pass
         return []
 
@@ -121,7 +122,7 @@ class DesiRulez(Scraper):
                 url = client.parseDOM(link, "a", ret="href")[0]
                 linkTitle = client.parseDOM(link, "a")[0]
                 parsed = re.compile('(.+) [\(](\d{4})[/)] ').findall(linkTitle)[0]
-                title = parsed[0]
+                title = parsed[0].encode('ascii', 'ignore')
                 year = parsed[1]
                 movies.append({'url':url, 'title':title, 'year':year})
             return movies
