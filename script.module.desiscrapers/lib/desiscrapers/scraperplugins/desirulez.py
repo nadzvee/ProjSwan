@@ -16,7 +16,7 @@ class DesiRulez(Scraper):
     def scrape_movie(self, title, year, imdb, debrid = False):
         try:
             movies = cache.get(self.desiRulezCache, 168)
-            url = [i['url'] for i in movies if cleantitle.get(i['title'].decode('UTF-8')) == cleantitle.get(title)]
+            url = [i['url'] for i in movies if cleantitle.get(i['title'].decode('UTF-8')) == cleantitle.get(title)][0]
             return self.sources(client.replaceHTMLCodes(url))
         except Exception as e:
             logger.error(e)
