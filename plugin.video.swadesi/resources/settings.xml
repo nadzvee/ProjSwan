@@ -73,6 +73,8 @@
 		<setting id="desiplex_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desirulez" type="lsep"/>
 		<setting id="desirulez_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="desiserials" type="lsep"/>
+		<setting id="desiserials_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desitashan" type="lsep"/>
 		<setting id="desitashan_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="ditto" type="lsep"/>
@@ -102,7 +104,7 @@
 		<setting label="watchfree" type="lsep"/>
 		<setting id="watchfree_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="world4u" type="lsep"/>
-		<setting id="world4u_enabled" type="bool" label="Enabled" default="false"/>
+		<setting id="world4u_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="yodesi" type="lsep"/>
 		<setting id="yodesi_enabled" type="bool" label="Enabled" default="true"/>
 	</category>

@@ -21,6 +21,8 @@
 		<setting id="desiplex_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desirulez" type="lsep"/>
 		<setting id="desirulez_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="desiserials" type="lsep"/>
+		<setting id="desiserials_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desitashan" type="lsep"/>
 		<setting id="desitashan_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="ditto" type="lsep"/>
