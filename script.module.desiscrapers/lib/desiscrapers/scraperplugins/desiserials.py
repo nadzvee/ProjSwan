@@ -34,39 +34,76 @@ class DesiTashan(Scraper):
                 linkTitle = client.parseDOM(item, 'title')[0]
                 linkTitle = cleantitle.get(linkTitle).replace('watchonlineepisodehd','')
                 if cleanedTitle == linkTitle :
-                    self.srcs.extend(self.source(item))
-            return self.srcs
+                    url = client.parseDOM(item, "link")[0]
+                    break
+
+            return self.sources(client.replaceHTMLCodes(url))
         except:
+            return self.srcs
+
+    def sources(self, url):
+        logger.debug('SOURCES URL %s' % url, __name__)
+        try:
+            quality = ''
+            srcs = []
+
+            if url == None: return srcs
+
+            result = client.request(url)
+
+            result = result.decode('iso-8859-1').encode('utf-8')
+
+            result = result.replace('\n','')
+
+            result = client.parseDOM(result, "div", attrs={"class": "post-content bottom"})[0]
+
+            items = client.parseDOM(result, "p")
+
+            hosts = client.parseDOM(result, "span", attrs={"style":"color: red;"})
+
+            links = []
+
+            for item in items:
+                if 'a href' in item:
+                    links.append(item)
+            items = zip(hosts, links)
+
+            for item in items:
+                self.srcs.extend(self.source(item))
+
+            logger.debug('SOURCES [%s]' % self.srcs, __name__)
+            return self.srcs
+        except Exception as e:
+            logger.error(e)
             return self.srcs
 
     def source(self, item):
-        try:
-            srcs = []
 
-            links = client.parseDOM(item, 'link')
+        title = item[0]
+        links = item[1]
+        urls = []
+        if '720p' in title:
+            quality = 'HD'
+        else:
+            quality = 'SD'
 
-            for link in links:
+        parts = client.parseDOM(links, "a", ret="href")
+        srcs = []
 
-                if 'span' in link:
-                    if 'HD' in link:
-                        quality = 'HD'
-                    else:
-                        quality = 'SD'
-                    continue
+        for part in parts:
+            try :
+                part = client.request(part)
+                part = part.decode('iso-8859-1').encode('utf-8')
+                part = client.parseDOM(part, "td", attrs={"style":"vertical-align:middle;text-align:center;"})[0]
+                tUrl = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(part)[0][1]
+                host = client.host(tUrl)
+                urls.append(tUrl)
 
-                urls = client.parseDOM(link, 'a', ret='href')
+            except Exception as e:
+                logger.error(e)
+                pass
 
-                if len(urls) > 0 :
+        url = "##".join(urls)
+        srcs.append({'source': host, 'parts': len(urls), 'quality': quality, 'scraper': self.name, 'url': url, 'direct':False})
 
-                    for i in range(0, len(urls)) :
-                        urls[i] = client.urlRewrite(urls[i])
-
-                    host = client.host(urls[0])
-                    url = "##".join(urls)
-
-                    srcs.append({'source':host, 'parts': str(len(urls)), 'quality':quality,'scraper':self.name,'url':url, 'direct':False})
-                    urls = []
-            logger.debug('SOURCES [%s]' % srcs, __name__)
-            return srcs
-        except:
-            pass
+        return srcs
