@@ -14,7 +14,7 @@ class TamilGun(Scraper):
     name = "tamilgun"
 
     def __init__(self):
-        self.base_link = 'http://www.tamilgun.pro'
+        self.base_link = 'http://www.tamilgun.fun'
         self.search_link = '/feed/?search=Search&s=%s'
         self.srcs = []
 

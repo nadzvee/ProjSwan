@@ -105,6 +105,8 @@
 		<setting id="watchfree_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="world4u" type="lsep"/>
 		<setting id="world4u_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="wrmovies" type="lsep"/>
+		<setting id="wrmovies_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="yodesi" type="lsep"/>
 		<setting id="yodesi_enabled" type="bool" label="Enabled" default="true"/>
 	</category>

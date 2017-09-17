@@ -106,7 +106,7 @@ def testManual():
             year = movie['year']
             imdb = movie['imdb']
             logger.debug(" Scraping movie {} of {}".format(index, num_movies))
-            links_scraper = desiscrapers.scrape_movie(title, year, imdb)
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host='wrmovies')
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:
