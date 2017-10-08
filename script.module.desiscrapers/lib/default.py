@@ -96,6 +96,10 @@ def testManual():
         logger.debug("Desiscrapers Testing Mode", 'Error connecting to db')
         sys.exit()
 
+    #testManualMovies()
+    testManualShows()
+
+def testManualMovies():
     num_movies = len(movies)
     if num_movies > 0:
         logger.debug('Desiscrapers Testing mode active', 'please wait')
@@ -106,60 +110,31 @@ def testManual():
             year = movie['year']
             imdb = movie['imdb']
             logger.debug(" Scraping movie {} of {}".format(index, num_movies))
-            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host='wrmovies')
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['ditto'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:
                     random.shuffle(scraper_links)
 
-        dbcur.execute("SELECT COUNT(DISTINCT(scraper)) FROM rel_src where episode = ''")
-        match = dbcur.fetchone()
-        num_movie_scrapers = match[0]
+def testManualShows():
+    num_shows = len(shows)
+    if num_shows > 0:
+        index = 0
+        for show in shows:
+            index += 1
+            title = show['title']
+            show_year = show['show_year']
+            year = show['year']
+            season = show['season']
+            episode = show['episode']
+            imdb = show['imdb']
+            tvdb = show.get('tvdb', '')
 
-        dbcur.execute("SELECT scraper, count(distinct(urls)) FROM rel_src where episode = '' group by scraper")
-        matches = dbcur.fetchall()
-        failed = []
-        for match in matches:
-            if int(match[1]) <= 1:
-                failed.append(match[0])
-
-        if len(failed) > 0:
-            failedstring = "Failed: {}".format(len(failed))
-            for fail in failed:
-                failedstring += "\n        - {}".format(str(fail))
-        else:
-            failedstring = ""
-
-        dbcur.execute("SELECT title, count(distinct(urls)) FROM rel_src where episode = '' group by title")
-        matches = dbcur.fetchall()
-        failed_movies = []
-        for match in matches:
-            if int(match[1]) <= 1:
-                if int(match[1]) == 1:
-                    dbcur.execute(
-                        "SELECT scraper, urls FROM rel_src where episode == '' and title == '{}' group by scraper".format(
-                            match[0]))
-                    new_matches = dbcur.fetchall()
-                    found = False
-                    for new_match in new_matches:
-                        if new_match[1] == "[]":
-                            continue
-                        else:
-                            found = True
-                    if not found:
-                        failed_movies.append(match[0])
-                else:
-                    failed_movies.append(match[0])
-
-        if len(failed_movies) > 0:
-            failed_movie_string = "Failed movies: {}".format(len(failed_movies))
-            for fail in failed_movies:
-                for movie in movies:
-                    if cleantitle.get(movie['title']).upper() == str(fail):
-                        failed_movie_string += "\n        - {}".format(movie["title"])
-
-        else:
-            failed_movie_string = ""
+            links_scraper = desiscrapers.scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=['fifastop'])
+            links_scraper = links_scraper()
+            for scraper_links in links_scraper:
+                if scraper_links:
+                    random.shuffle(scraper_links)
 
 
 def test():

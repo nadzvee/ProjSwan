@@ -21,6 +21,25 @@
 import urlparse,os,sys
 import xbmc,xbmcaddon,xbmcplugin,xbmcgui,xbmcvfs
 
+transPath = xbmc.translatePath
+
+def init(id=None):
+    global addon, addonInfo, lang, setting, setSetting, addonPath, dataPath, settingsFile, databaseFile, sourcescacheFile, libcacheFile, metacacheFile, cacheFile
+    addon = xbmcaddon.Addon(id=id)
+    addonInfo = addon.getAddonInfo
+    lang = addon.getLocalizedString
+    setting = addon.getSetting
+    setSetting = addon.setSetting
+    addonPath = transPath(addonInfo('path'))
+    dataPath = transPath(addonInfo('profile')).decode('utf-8')
+    settingsFile = os.path.join(dataPath, 'settings.xml')
+    databaseFile = os.path.join(dataPath, 'settings.db')
+    sourcescacheFile = os.path.join(dataPath, 'sources.db')
+    libcacheFile = os.path.join(dataPath, 'library.db')
+    metacacheFile = os.path.join(dataPath, 'meta.db')
+    cacheFile = os.path.join(dataPath, 'cache.db')
+
+
 addon = xbmcaddon.Addon()
 
 lang = addon.getLocalizedString
@@ -28,6 +47,8 @@ lang = addon.getLocalizedString
 setting = addon.getSetting
 
 setSetting = addon.setSetting
+
+addonInfo = addon.getAddonInfo
 
 addItem = xbmcplugin.addDirectoryItem
 
@@ -38,8 +59,6 @@ directory = xbmcplugin.endOfDirectory
 content = xbmcplugin.setContent
 
 property = xbmcplugin.setProperty
-
-addonInfo = addon.getAddonInfo
 
 abortRequested = xbmc.abortRequested
 
@@ -87,13 +106,11 @@ deleteFile = xbmcvfs.delete
 
 listDir = xbmcvfs.listdir
 
-transPath = xbmc.translatePath
+skinPath = transPath('special://skin/')
 
-skinPath = xbmc.translatePath('special://skin/')
+addonPath = transPath(addonInfo('path'))
 
-addonPath = xbmc.translatePath(addonInfo('path'))
-
-dataPath = xbmc.translatePath(addonInfo('profile')).decode('utf-8')
+dataPath = transPath(addonInfo('profile')).decode('utf-8')
 
 settingsFile = os.path.join(dataPath, 'settings.xml')
 

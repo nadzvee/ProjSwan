@@ -68,9 +68,10 @@ class sources:
 
             downloads = True if control.setting('downloads') == 'true' and not control.setting('movie.download.path') == '' else False
 
-            if 'tvshowtitle' in meta and 'season' in meta and 'episode' in meta:
-                name = '%s S%02dE%02d' % (title, int(meta['season']), int(meta['episode']))
-            elif 'year' in meta:
+            #if 'tvshowtitle' in meta and 'season' in meta and 'episode' in meta:
+            #    name = '%s S%02dE%02d' % (title, int(meta['season']), int(meta['episode']))
+            #el
+            if 'year' in meta:
                 name = '%s (%s)' % (title, meta['year'])
             else:
                 name = title
@@ -302,6 +303,7 @@ class sources:
 
         import desiscrapers
 
+        control.init('script.module.desiscrapers')
         if content == 'movie':
             title = cleantitle.normalize(title)
             links_scraper, totalScrapers = desiscrapers.scrape_movie_foreground(title, year, imdb, timeout=timeout, enable_debrid=allowDebrid)
@@ -311,8 +313,10 @@ class sources:
             imdb = json.loads(meta)['url']
             show_year = year
             links_scraper, totalScrapers = desiscrapers.scrape_episode_foreground(tvshowtitle, show_year, year, season, episode, imdb, tvdb, timeout=timeout, enable_debrid=allowDebrid)
+        control.init('plugin.video.swadesi')
 
         control.idle()
+
 
         self.progressDialog = control.progressDialog
         self.progressDialog.create(control.addonInfo('name'), '')

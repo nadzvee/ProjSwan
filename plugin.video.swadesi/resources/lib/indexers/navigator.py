@@ -47,7 +47,7 @@ class navigator:
         self.addDirectoryItem(30864, 'changelog', 'changelog.png', 'DefaultMovies.png')
 
         cache.get(changelog.get, 600000000, control.addonInfo('version'), table='changelog')
-        #cache.get(self.donation, 600000000, control.addonInfo('version'), table='changelog')
+        cache.get(self.donation, 336, control.addonInfo('version'), table='changelog')
         #cache.get(control.resetSettings, 600000000, 'true', control.addonInfo('version'), table='changelog')
         cache.get(analytics.sendAnalytics, 600000000, ("Installed-%s" % control.addonInfo('version')), table='changelog')
 
@@ -63,7 +63,7 @@ class navigator:
         self.endDirectory()
 
     def donation(self, version):
-        #control.okDialog("Aftershock Offline", "", "In light of recent events i have decided to no maintaine or support Aftershock addon.")
+        control.okDialog("If you like the addon please consider making a donation to [B]aftershockpy@gmail.com[/B]")
         return 1
 
     def clearCache(self, url=None):

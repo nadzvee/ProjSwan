@@ -26,13 +26,11 @@ import random
 import re
 import sys
 import time
-import traceback
 import urllib
 import urllib2
 import urlparse
 
 from . import cache
-from . import control
 from . import workers
 
 
@@ -456,10 +454,3 @@ def host(url):
 
 def agent():
     return 'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
-
-def printException(function):
-    try :debug = True if control.setting('debug') == 'true' else False
-    except: debug = True
-    if debug:
-        print 'Exception in %s' % (function)
-        traceback.print_exc()
