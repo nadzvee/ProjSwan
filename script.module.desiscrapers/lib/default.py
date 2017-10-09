@@ -50,6 +50,14 @@ movies = [
 
 shows = [
     {
+        'title': "Bigg Boss 11",
+        'show_year': "",
+        'year': "",
+        'season': '',
+        'episode': '8th October 2017',
+        'imdb': 'threads/1085119-Bigg-Boss-Season-11-Weekend-Ka-Vaar-8th-October-2017-Watch-Online?s=6b53bae950baa63d1b4770050373e146',
+    },
+    {
         'title': "Yeh Rishta Kya Kehlata Hai",
         'show_year': "",
         'year': "",
@@ -130,7 +138,7 @@ def testManualShows():
             imdb = show['imdb']
             tvdb = show.get('tvdb', '')
 
-            links_scraper = desiscrapers.scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=['fifastop'])
+            links_scraper = desiscrapers.scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=['yodesi', 'badtameezdil'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:

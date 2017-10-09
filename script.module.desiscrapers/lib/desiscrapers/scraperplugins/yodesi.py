@@ -33,6 +33,7 @@ class YoDesi(Scraper):
 
             for i in range(0, len(items)):
                 self.source(items[i])
+            return self.srcs
         except:
             return self.srcs
 

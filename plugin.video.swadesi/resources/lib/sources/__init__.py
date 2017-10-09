@@ -312,6 +312,7 @@ class sources:
             tvshowtitle = cleantitle.normalize(tvshowtitle)
             imdb = json.loads(meta)['url']
             show_year = year
+            tvshowtitle = tvshowtitle.replace('Season','').replace('season','')
             links_scraper, totalScrapers = desiscrapers.scrape_episode_foreground(tvshowtitle, show_year, year, season, episode, imdb, tvdb, timeout=timeout, enable_debrid=allowDebrid)
         control.init('plugin.video.swadesi')
 

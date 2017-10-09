@@ -29,8 +29,6 @@
 		<setting id="ditto_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="einthusan" type="lsep"/>
 		<setting id="einthusan_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="fifastop" type="lsep"/>
-		<setting id="fifastop_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="filmywap" type="lsep"/>
 		<setting id="filmywap_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="hdbuffer" type="lsep"/>
