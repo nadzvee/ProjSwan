@@ -9,9 +9,6 @@ from aftershock.common import control
 def scrape_movie(title, year, imdb, host=None, include_disabled=False, timeout=30, exclude=None, enable_debrid = False):
     return HostedLink(title, year, imdb, None, host, include_disabled, timeout, exclude, enable_debrid, scraper_type='movie').scrape_movie()
 
-def scrape_movie_foreground(title, year, imdb, host=None, include_disabled=False, timeout=30, exclude=None, enable_debrid = False):
-    return HostedLink(title, year, imdb, None, host, include_disabled, timeout, exclude, enable_debrid, scraper_type='movie').scrape_movie_foreground()
-
 
 def scrape_movie_with_dialog(title, year, imdb, host=None, include_disabled=False, timeout=30, exclude=None,
                              sort_function=None, check_url=False, extended=False, enable_debrid = False):
@@ -24,12 +21,6 @@ def scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=Non
     return HostedLink(title, year, imdb, tvdb, host, include_disabled, timeout, exclude, enable_debrid, scraper_type='episode').scrape_episode(show_year,
                                                                                                         season,
                                                                                                         episode)
-
-def scrape_episode_foreground(title, show_year, year, season, episode, imdb, tvdb, host=None, include_disabled=False, timeout=30,
-                   exclude=None, enable_debrid = False):
-    return HostedLink(title, year, imdb, tvdb, host, include_disabled, timeout, exclude, enable_debrid, scraper_type='episode').scrape_episode_foreground(show_year,
-                                                                                                                                               season,
-                                                                                                                                               episode)
 
 def scrape_episode_with_dialog(title, show_year, year, season, episode, imdb, tvdb, host=None, include_disabled=False,
                                timeout=30, exclude=None, sort_function=None, check_url=False, extended=False, enable_debrid = False):

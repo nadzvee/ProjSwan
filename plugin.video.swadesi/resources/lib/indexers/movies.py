@@ -293,6 +293,7 @@ class movies:
 
     def super_info(self, i):
         try:
+
             if self.list[i]['metacache'] == True: raise Exception()
 
             imdb = self.list[i]['imdb']
@@ -408,7 +409,8 @@ class movies:
             url = self.trakt_info_link % imdb
 
             art3 = trakt.getTrakt(url)
-            art3 = json.loads(art3)
+            try : art3 = json.loads(art3)
+            except:pass
 
             if poster == '0':
                 try: poster = art3['images']['poster']['medium']
@@ -437,10 +439,9 @@ class movies:
                 if not fanart == '0': self.list[i].update({'fanart': fanart})
 
             # add code for watched overlay
-
             self.meta.append({'imdb': imdb, 'tmdb':tmdb, 'tvdb': '0', 'lang': self.lang, 'item': {'title': title, 'year': year, 'code': imdb, 'imdb': imdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'director': director, 'writer': writer, 'cast': cast, 'plot': plot, 'trailer':trailer}})
         except Exception as e:
-            logger.error(e, __name__)
+            #logger.error(e, __name__)
             pass
 
     def movieDirectory(self, items, lang=None):
@@ -494,7 +495,7 @@ class movies:
 
                 try:
                     overlay = int(playcount.getMovieOverlay(indicators, imdb))
-                    logger.debug('imdb : %s Overlay : %s' % (imdb, overlay), __name__)
+                    #logger.debug('imdb : %s Overlay : %s' % (imdb, overlay), __name__)
                     if overlay == 7:
                         cm.append((control.lang(30206).encode('utf-8'), 'RunPlugin(%s?action=moviePlaycount&imdb=%s&query=6)' % (sysaddon, imdb)))
                         meta.update({'playcount': 1, 'overlay': 7})

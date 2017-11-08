@@ -62,7 +62,6 @@ def fetch(items, lang):
             items[i].update({'metacache': True})
         except:
             pass
-
     return items
 
 def insert(meta):
@@ -79,14 +78,10 @@ def insert(meta):
                 except: pass
                 dbcur.execute("INSERT INTO meta Values (?, ?, ?, ?, ?, ?)", (m['imdb'], m['tmdb'], m['tvdb'], m['lang'], i, t))
             except:
-                #import traceback
-                #traceback.print_exc()
                 pass
 
         dbcon.commit()
     except:
-        #import traceback
-        #traceback.print_exc()
         return
 
 def insertImdb(items):

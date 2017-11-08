@@ -209,10 +209,10 @@ class tvshows:
                 if cast != None and len(cast) > 0: self.list[i].update({'cast': cast})
 
             imdb = cleantitle.get(title)
-            tvdb = banner = fanart = studio = duration = rating = votes = mpaa = '0'
-            self.meta.append({'year': year, 'imdb': imdb, 'tvdb': tvdb, 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'cast': cast, 'plot': plot}})
-        except Exception as e:
-            logger.error(e, __name__)
+            tvdb = banner = fanart = studio = duration = rating = votes = mpaa = tmdb = '0'
+
+            self.meta.append({'year': year, 'tmdb': tmdb, 'imdb': imdb, 'tvdb': tvdb, 'lang': self.info_lang, 'item': {'code': imdb, 'imdb': imdb, 'tvdb': tvdb, 'poster': poster, 'banner': banner, 'fanart': fanart, 'premiered': premiered, 'studio': studio, 'genre': genre, 'duration': duration, 'rating': rating, 'votes': votes, 'mpaa': mpaa, 'cast': cast, 'plot': plot}})
+        except:
             pass
 
     def tvshowDirectory(self, items, confViewMode='list', estViewMode='widelist'):

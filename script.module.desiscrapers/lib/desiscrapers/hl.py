@@ -61,17 +61,6 @@ class HostedLink:
         else:
             return False
 
-    def scrape_movie_foreground(self, maximum_age=60):
-        scrape_f = lambda p: self.get_url(p, self.title, '', self.year, '', '', self.imdb, self.tvdb, "movie",
-                                          self.cache_location, maximum_age, debrid = self.debrid)
-        if len(self.__scrapers) > 0:
-            pool_size = 10
-            stop_flag = Event()
-            populator = lambda: execute(scrape_f, self.__scrapers, stop_flag, pool_size, self.timeout)
-            return populator, len(self.__scrapers)
-        else:
-            return False, 0
-
     def scrape_movie_with_dialog(self, maximum_age=60, sort_function=None, check_url=False, extended=False):
         scrape_f = lambda p: self.to_dialog_tuple(
             self.get_url(p, self.title, '', self.year, '', '', self.imdb, self.tvdb, "movie",
@@ -97,18 +86,6 @@ class HostedLink:
             stop_flag = Event()
             populator = lambda: execute(scrape_f, self.__scrapers, stop_flag, pool_size, self.timeout)
             return populator
-        else:
-            return False
-
-    def scrape_episode_foreground(self, show_year, season, episode, maximum_age=60):
-        scrape_f = lambda p: self.get_url(p, self.title, show_year, self.year, season, episode, self.imdb, self.tvdb,
-                                          "episode",
-                                          self.cache_location, maximum_age, debrid = self.debrid)
-        if len(self.__scrapers) > 0:
-            pool_size = 10
-            stop_flag = Event()
-            populator = lambda: execute(scrape_f, self.__scrapers, stop_flag, pool_size, self.timeout)
-            return populator, len(self.__scrapers)
         else:
             return False
 

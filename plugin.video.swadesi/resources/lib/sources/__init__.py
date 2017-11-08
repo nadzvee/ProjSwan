@@ -304,16 +304,17 @@ class sources:
         import desiscrapers
 
         control.init('script.module.desiscrapers')
+        totalScrapers = len(desiscrapers.relevant_scrapers(scraper_type=content))
         if content == 'movie':
             title = cleantitle.normalize(title)
-            links_scraper, totalScrapers = desiscrapers.scrape_movie_foreground(title, year, imdb, timeout=timeout, enable_debrid=allowDebrid)
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, timeout=timeout, enable_debrid=allowDebrid)
 
         elif content == 'episode':
             tvshowtitle = cleantitle.normalize(tvshowtitle)
             imdb = json.loads(meta)['url']
             show_year = year
             tvshowtitle = tvshowtitle.replace('Season','').replace('season','')
-            links_scraper, totalScrapers = desiscrapers.scrape_episode_foreground(tvshowtitle, show_year, year, season, episode, imdb, tvdb, timeout=timeout, enable_debrid=allowDebrid)
+            links_scraper = desiscrapers.scrape_episode(tvshowtitle, show_year, year, season, episode, imdb, tvdb, timeout=timeout, enable_debrid=allowDebrid)
         control.init('plugin.video.swadesi')
 
         control.idle()
@@ -323,14 +324,44 @@ class sources:
         self.progressDialog.create(control.addonInfo('name'), '')
         self.progressDialog.update(0)
 
-        string1 = control.lang(30512).encode('utf-8')
-        string2 = control.lang(30513).encode('utf-8')
-        string3 = control.lang(30514).encode('utf-8')
+        thread = workers.Thread(self.get_desi_sources, links_scraper, totalScrapers)
 
+        thread.start()
+        for i in range(0, timeout * 2):
+            try:
+                if xbmc.abortRequested:
+                    return sys.exit()
+                try:
+                    if self.progressDialog.iscanceled():
+                        break
+                except:
+                    pass
+                if not thread.is_alive(): break
+                time.sleep(0.5)
+            except:
+                pass
+
+        self.progressDialog.close()
+
+        for i in range(0, len(self.srcs)): self.srcs[i].update({'content': content})
+
+        return self.srcs
+
+    def get_desi_sources(self, links_scraper, totalScrapers):
         links_scraper = links_scraper()
         done = 0
 
         start_time = time.time()
+
+        timeElapsed = control.lang(30512).encode('utf-8')
+        seconds = control.lang(30513).encode('utf-8')
+        processedSources = control.lang(30514).encode('utf-8')
+
+        hdcount = 0
+        sdcount = 0
+        othercount = 0
+        allcount = 0
+
         for scraper_links in links_scraper:
             done += 1
             end_time = time.time()
@@ -342,7 +373,36 @@ class sources:
 
                 done = totalScrapers if done >= totalScrapers else done
 
-                self.progressDialog.update(int((100 / float(totalScrapers)) * done), str('%s: %s %s' % (string1, int(duration), string2)), str('%s: %s' % (string3, str(info))))
+
+                for scraper_link in scraper_links:
+                    try:
+                        q = scraper_link['quality']
+                        if "1080" in q:
+                            hdcount += 1
+                        elif "HD" in q:
+                            hdcount += 1
+                        elif "720" in q:
+                            hdcount += 1
+                            scraper_link["quality"] = "HD"
+                        elif "720" in q:
+                            hdcount += 1
+                            scraper_link["quality"] = "HD"
+                        elif "560" in q:
+                            hdcount += 1
+                            scraper_link["quality"] = "HD"
+                        elif "SD" in q:
+                            sdcount += 1
+                        else:
+                            othercount += 1
+                    except:
+                        pass
+
+                allcount = hdcount + sdcount + othercount
+
+
+                self.progressDialog.update(int((100 / float(totalScrapers)) * done),
+                                           str('%s: %s %s  HD : [COLOR red][B]%s[/B][/COLOR] SD : [COLOR blue][B]%s[/B][/COLOR] ([COLOR lime][B]%s[/B][/COLOR])' % (timeElapsed, int(duration), seconds, hdcount, sdcount, allcount)),
+                                           str('%s: %s' % (processedSources, str(info))))
 
                 if scraper_links is not None and len(scraper_links) > 0:
                     self.srcs.extend(scraper_links)
@@ -351,12 +411,6 @@ class sources:
 
             except:
                 pass
-
-        self.progressDialog.close()
-
-        for i in range(0, len(self.srcs)): self.srcs[i].update({'content': content})
-
-        return self.srcs
 
     def sourcesDialog(self, items):
         try:
