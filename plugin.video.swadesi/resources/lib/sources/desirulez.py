@@ -161,6 +161,7 @@ class source:
             tvshowurl = url
             for base_link in links:
                 try:
+                    url = url.replace(base_link, '')
                     result = client.request(base_link + '/' + url)
                     if result == None:
                         raise Exception()

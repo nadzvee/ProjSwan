@@ -52,7 +52,8 @@ try :
     #params = {'name': 'Toilet - Ek Prem Katha (2017)', 'title': 'Toilet - Ek Prem Katha', 'meta': '{"rating": "8", "votes": "2,852", "code": "tt5785170", "cast": [["Akshay Kumar", ""], ["Bhumi Pednekar", ""], ["Anupam Kher", ""], ["Sudhir Pandey", ""], ["Rajesh Sharma", ""], ["Divyendu Sharma", ""], ["Kimti Anand", "Pradhan"], ["Jaspal Sharma", "Dabloo,keshav\'s friend"], ["Vikas Pal", "Hari, keshav\'s friend"], ["Sana Khan", ""]], "plot": "Keshav and Jaya are from two villages near Mathura, where at least 80% of households are without any access to a lavatories. Conflict comes knocking on the first day of their marriage, when Jaya leaves Keshav\'s house for good, after discovering that there is no toilet in the home. Distraught and desperate, Keshav sets out on mission to win back his love- by battling against the age old traditions, mind-set and value system of his country.", "fanart": "https://image.tmdb.org/t/p/w1280/5FqE5tttmO2T1IxG5RXZXrpEoZM.jpg", "poster": "https://image.tmdb.org/t/p/w500/i0m0miSN3f7aRkmrsf2Erls8su5.jpg", "title": "Toilet - Ek Prem Katha", "originaltitle": "Toilet - Ek Prem Katha", "premiered": "2017-08-11", "next": "http://www.imdb.com/search/title?title_type=feature,tv_movie&num_votes=100,&production_status=released&languages=hi&count=40&start=1&start=1&sort=release_date,desc&page=2&ref_=adv_nxt", "director": "Shree Narayan Singh", "writer": "Siddharth Singh / Garima Wahal", "tmdb": 441875, "imdb": "tt5785170", "trailer": "plugin://plugin.video.swadesi/?action=trailer&name=Toilet+-+Ek+Prem+Katha+%282017%29&url=ym4EJQ7XORk", "year": "2017", "duration": "9660", "genre": "Comedy / Drama", "metacache": false}', 'imdb': 'tt5785170', 't': '20170813191853239881', 'year': '2017', 'action': 'play'}
     params = {'action': 'tvshows', 'url': 'forumdisplay.php?f=42', 'name': 'Star Plus', 'provider': 'desirulez'}
     #params = {'episode': '5th October 2017', 'name': '5th October 2017', 'title': '5th October 2017', 'tvdb': '0', 'season': '11', 'tvshowtitle': 'Bigg Boss Season 11', 'date': '0', 'meta': '{"episode": "5th October 2017", "name": "5th October 2017", "title": "5th October 2017", "url": "threads/1084438-Bigg-Boss-Season-11-5th-October-2017-Watch-Online?s=ed1fe47c9106a2bae94a1861074fcb20", "season": "11", "tvshowtitle": "Bigg Boss Season 11", "provider": "desirulez", "duration": "1800", "trailer": "plugin://plugin.video.swadesi/?action=trailer&name=Bigg+Boss+Season+11", "tvshowurl": "forums/4771-Bigg-Boss-Season-11"}', 'imdb': '0', 't': '20171007192656503661', 'year': '0', 'action': 'play'}
-
+    params = {'tvdb': '0', 'tvshowtitle': 'Bigg Boss Season 11', 'year': '0', 'url': 'http://www.desirulez.me/bigg-boss-season-11-a.html', 'imdb': '0', 'provider': 'desirulez', 'action': 'episodes'}
+    #params = {'action': 'tvshows', 'url': 'forumdisplay.php?f=176', 'name': 'Colors TV', 'provider': 'desirulez'}
     select = None
 
     try:
@@ -145,9 +146,9 @@ try :
     from aftershock.common import debrid, client
     from resources.lib import resolvers
 
-    tvshows.tvshows().get(url, provider=provider, network=name)
+    #tvshows.tvshows().get(url, provider=provider, network=name)
 
-    #episodes.episodes().get(tvshowtitle, year, imdb, tvdb, season, episode, provider=provider, url=url)
+    episodes.episodes().get(tvshowtitle, year, imdb, tvdb, season, episode, provider=provider, url=url)
 
     #movies.movies().get(url, lang=lang)
 
