@@ -186,7 +186,10 @@ class source:
                 if "Online" not in name: continue
                 name = name.replace(title, '')
                 if not title == 'awards'  :
-                    name = re.compile('([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
+                    try :
+                        name = re.compile('([\d{1}|\d{2}]\w.+\d{4})').findall(name)[0]
+                    except:
+                        pass
                 name = name.strip()
                 try :
                     season = title.lower()
