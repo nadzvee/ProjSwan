@@ -33,6 +33,8 @@
 		<setting id="hindilinks4u_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="hindimoviesonline" type="lsep"/>
 		<setting id="hindimoviesonline_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="moviesgold" type="lsep"/>
+		<setting id="moviesgold_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="primewire" type="lsep"/>
 		<setting id="primewire_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="putlocker" type="lsep"/>
