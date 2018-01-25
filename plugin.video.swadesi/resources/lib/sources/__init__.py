@@ -582,9 +582,9 @@ class sources:
         if quality == '0' or quality == '1': filter += [i for i in self.srcs if i['quality'] == 'HD' and 'debrid' in i]
         if quality == '0' or quality == '1': filter += [i for i in self.srcs if i['quality'] == 'HD' and not 'debrid' in i]
         filter += [i for i in self.srcs if i['quality'] == 'SD' and not 'debrid' in i]
-        if len(filter) < 35: filter += [i for i in self.srcs if i['quality'] == 'SCR']
-        if len(filter) < 35:filter += [i for i in self.srcs if i['quality'] == 'CAM']
-        if len(filter) < 35:filter += [i for i in self.srcs if i['quality'] == '']
+        filter += [i for i in self.srcs if i['quality'] == 'SCR']
+        filter += [i for i in self.srcs if i['quality'] == 'CAM']
+        if len(filter) < 100:filter += [i for i in self.srcs if i['quality'] == '']
         self.srcs = filter
 
         r = [x for x in self.srcs + originalSrcs if x not in self.srcs or x not in originalSrcs]
