@@ -5,8 +5,6 @@
 		<setting id="debug" type="bool" label="Debug" default="true"/>
 	</category>
 	<category label="Scrapers 1">
-		<setting label="apnaview" type="lsep"/>
-		<setting id="apnaview_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="badtameezdil" type="lsep"/>
 		<setting id="badtameezdil_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="bmoviez" type="lsep"/>
@@ -33,6 +31,8 @@
 		<setting id="hdbuffer_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="hindilinks4u" type="lsep"/>
 		<setting id="hindilinks4u_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="hindimoviesonline" type="lsep"/>
+		<setting id="hindimoviesonline_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="primewire" type="lsep"/>
 		<setting id="primewire_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="putlocker" type="lsep"/>
