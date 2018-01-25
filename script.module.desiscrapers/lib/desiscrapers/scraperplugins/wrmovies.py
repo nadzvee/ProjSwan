@@ -30,15 +30,8 @@ class WRMovies(Scraper):
 
             for item in items:
                 linkTitle = client.parseDOM(item, 'title')[0]
-                try :
-                    parsed = re.compile('(.+?) \((\d{4})\)').findall(linkTitle)[0]
-                    parsedTitle = parsed[0]
-                    parsedYear = parsed[1]
-                except Exception as e:
-                    logger.error(e)
-                    pass
 
-                if cleanedTitle == cleantitle.get(parsedTitle) and year == parsedYear:
+                if cleanedTitle == cleantitle.get(linkTitle):
                     url = client.parseDOM(item, "link")[0]
             return self.sources(client.replaceHTMLCodes(url))
         except Exception as e:

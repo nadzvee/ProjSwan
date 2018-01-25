@@ -36,7 +36,7 @@ class RLSMovies(Scraper):
     def sources(self, url):
         logger.debug('SOURCES URL %s' % url, __name__)
         try:
-            if url == None: return srcs
+            if url == None: return self.srcs
 
             data = urlparse.parse_qs(url)
             data = dict([(i, data[i][0]) if data[i] else (i, '') for i in data])

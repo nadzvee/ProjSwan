@@ -10,7 +10,7 @@ class DesiRulez(Scraper):
     name = "desirulez"
 
     def __init__(self):
-        self.base_link = 'http://www.desirulez.net'
+        self.base_link = 'http://www.desirulez.me'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):
@@ -35,6 +35,7 @@ class DesiRulez(Scraper):
         try:
             srcs = []
 
+            url = url.replace(self.base_link, '')
             result = client.request(self.base_link + '/' + url)
 
             result = result.decode('iso-8859-1').encode('utf-8')

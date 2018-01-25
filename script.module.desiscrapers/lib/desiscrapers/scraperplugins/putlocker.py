@@ -12,16 +12,40 @@ from ..scraper import Scraper
 class PutLocker(Scraper):
     domains = ['putlocker.systems', 'putlocker-movies.tv', 'putlocker.yt', 'cartoonhd.website']
     name = "putlocker"
+    userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
 
     def __init__(self):
-        self.base_link = 'http://cartoonhd.global'
+        self.base_link = 'http://putlockerhd.co'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):
         try:
-            url = {'imdb': imdb, 'title': title, 'year': year}
-            url = urllib.urlencode(url)
-            return self.sources(client.replaceHTMLCodes(url))
+            query = cleantitle.get(title)
+            query = '/watch?v=%s_%s' % (query.replace(' ','_'),year)
+            query = urlparse.urljoin(self.base_link, query)
+            headers = {'User-Agent':self.userAgent}
+
+            result = client.request(query, headers=headers)
+
+            varid = re.compile('var frame_url = "(.+?)"',re.DOTALL).findall(result)[0].replace('/embed/','/streamdrive/info/')
+            res_chk = re.compile('class="title"><h1>(.+?)</h1>',re.DOTALL).findall(result)[0]
+            varid = 'http:'+varid
+            holder = client.request(varid,headers=headers).content
+            links = re.compile('"src":"(.+?)"',re.DOTALL).findall(holder)
+            count = 0
+            for link in links:
+                link = link.replace('\\/redirect?url=','')
+                link = urllib.unquote(link).decode('utf8')
+                if '1080' in res_chk:
+                    res= '1080p'
+                elif '720' in res_chk:
+                    res='720p'
+                else:
+                    res='DVD'
+                count +=1
+                self.srcs.append({'source': 'Googlelink','parts' : '1', 'quality': res,'scraper': self.name,'url':link,'direct': False})
+
+            return self.srcs
         except:
             pass
         return []
@@ -41,6 +65,8 @@ class PutLocker(Scraper):
             srcs = []
 
             if url == None: return srcs
+
+            start_url = '%s/watch?v=%s_%s' %(self.base_link,search_id.replace(' ','_'),year)
 
             if not str(url).startswith('http'):
 

@@ -12,7 +12,7 @@ class WatchFree(Scraper):
     name = "watchfree"
 
     def __init__(self):
-        self.base_link = 'http://www.watchfree.to'
+        self.base_link = 'http://gowatchfreemovies.to'
         self.moviesearch_link = '/?keyword=%s&search_section=1'
         self.srcs = []
 
@@ -26,7 +26,7 @@ class WatchFree(Scraper):
 
             result = client.parseDOM(result, 'div', attrs = {'class': 'item'})
 
-            title = 'watch' + cleantitle.get(title)
+            title = 'watchputlocker' + cleantitle.get(title)
             years = ['(%s)' % str(year), '(%s)' % str(int(year)+1), '(%s)' % str(int(year)-1)]
 
             result = [(client.parseDOM(i, 'a', ret='href'), client.parseDOM(i, 'a', ret='title')) for i in result]

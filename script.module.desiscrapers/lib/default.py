@@ -22,6 +22,11 @@ from aftershock.common import cleantitle, logger, control
 
 movies = [
     {
+        'title': 'Baadshaho',
+        'imdb': '',
+        'year': '2017'
+    },
+    {
         'title': 'Befikre',
         'imdb': 'tt00000000',
         'year': '2016'
@@ -104,8 +109,8 @@ def testManual():
         logger.debug("Desiscrapers Testing Mode", 'Error connecting to db')
         sys.exit()
 
-    #testManualMovies()
-    testManualShows()
+    testManualMovies()
+    #testManualShows()
 
 def testManualMovies():
     num_movies = len(movies)
@@ -118,7 +123,7 @@ def testManualMovies():
             year = movie['year']
             imdb = movie['imdb']
             logger.debug(" Scraping movie {} of {}".format(index, num_movies))
-            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['ditto'])
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['yomovies'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:
