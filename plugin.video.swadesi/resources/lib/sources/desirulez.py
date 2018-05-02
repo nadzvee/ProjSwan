@@ -27,7 +27,7 @@ from aftershock.common import client, cache, logger, cleantitle
 
 class source:
     def __init__(self):
-        self.base_link_1 = 'http://www.desirulez.net'
+        self.base_link_1 = 'http://www.desirulez.cc'
         self.base_link_2 = 'http://www.desirulez.me'
         self.base_link_3 = 'http://www.desirulez.net'
         self.search_link = '/feed/?s=%s&submit=Search'
@@ -61,6 +61,7 @@ class source:
         self.colors_marathi_link = 'forumdisplay.php?f=2369'
         self.colors_bangla_link = 'forumdisplay.php?f=2117'
         self.maa_link = 'forumdisplay.php?f=3165'
+        self.star_bharat_link = 'forumdisplay.php?f=4856'
 
         self.hungama_link = 'forumdisplay.php?f=472'
         self.cartoon_network_link = 'forumdisplay.php?f=509'
@@ -102,6 +103,7 @@ class source:
         listItems.append({'provider':provider, 'name':90233, 'image': 'zee_yuva_in.png', 'action': 'tvshows', 'url':self.zee_yuva_link})
         url = 'episodes&tvshowtitle=awards&year=0&imdb=0&tvdb=0'
         listItems.append({'provider':provider, 'name':90234, 'image': 'awards_in.png', 'action': url, 'url':self.awards_link})
+        listItems.append({'provider':provider, 'name':90235, 'image': 'star_bharat.png', 'action': 'tvshows', 'url':self.star_bharat_link})
 
         return listItems
 
