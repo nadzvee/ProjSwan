@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 	<category label="30800">
+		<setting id="email" type="text" label="Email" default=""/>
 		<setting id="appearance.alt" type="action" label="32311" default="-" option="close" action="RunPlugin(plugin://plugin.video.aftershock/?action=artwork)" visible="!System.HasAddon(script.aftershock.artwork)" />
 		<setting id="appearance" type="select" label="32311" values="Default|Modern|Teal|Swadesi" default="Swadesi" visible="System.HasAddon(script.aftershock.artwork)" />
 		<setting id="fanart" type="bool" label="30802" default="true" />

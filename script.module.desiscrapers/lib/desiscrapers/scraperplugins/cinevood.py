@@ -6,12 +6,12 @@ from aftershock.common import cleantitle, client, logger
 from ..scraper import Scraper
 
 
-class DesiHDMovies(Scraper):
-    domains = ['desihdmovies.me']
-    name = "desihdmovies"
+class CineVood(Scraper):
+    domains = ['cinevood.net']
+    name = "cinevood"
 
     def __init__(self):
-        self.base_link = 'https://www.desihdmovies.me'
+        self.base_link = 'http://cinevood.net'
         self.search_link = '/feed?s=%s'
         self.srcs = []
 
@@ -30,16 +30,16 @@ class DesiHDMovies(Scraper):
 
             for item in items:
                 linkTitle = client.parseDOM(item, 'title')[0]
+
                 try :
-                    parsed = re.compile('(.+?) (\d{4}) ').findall(linkTitle)[0]
+                    parsed = re.compile('(.+?) \((\d{4})\) ').findall(linkTitle)[0]
                     parsedTitle = parsed[0]
-                    parsedYear = parsed[1]
+                    parsedYears = parsed[1]
                 except:
-                    parsedTitle = linkTitle
-                    parsedYear = year
+                    parsedTitle = ''
                     pass
 
-                if cleanedTitle == cleantitle.get(parsedTitle) and year == parsedYear:
+                if cleanedTitle == cleantitle.get(parsedTitle):
                     url = client.parseDOM(item, "link")[0]
             return self.sources(client.replaceHTMLCodes(url))
         except Exception as e:
@@ -54,7 +54,7 @@ class DesiHDMovies(Scraper):
 
             if url == None: return srcs
 
-            url = urlparse.urljoin(self.base_link, url)
+            #url = urlparse.urljoin(self.base_link, url)
 
             try: result = client.request(url, referer=self.base_link)
             except: result = ''
@@ -62,11 +62,13 @@ class DesiHDMovies(Scraper):
             result = result.decode('iso-8859-1').encode('utf-8')
             result = result.replace('\n','').replace('\t','')
 
-            items = client.parseDOM(result, "div", attrs={"class": "movieplay"})
+            result = client.parseDOM(result, "div", attrs={"class": "entry-content clearfix single-post-content"})
+            result = client.parseDOM(result, "p", attrs={"style":"text-align: center;"})
+            items = client.parseDOM(result, "a", ret="href")
 
             for item in items:
                 try :
-                    url = re.compile('(SRC|src|data-config)=[\'|\"](.+?)[\'|\"]').findall(item)[0][1]
+                    url = item
                     host = client.host(url)
                     srcs.append({'source': host, 'parts' : '1', 'quality': 'HD', 'scraper': self.name, 'url': url, 'direct':False})
                 except :

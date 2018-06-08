@@ -19,6 +19,7 @@ class BMoviez(Scraper):
         try:
             url = {'imdb': imdb, 'title': title, 'year': year}
             url = urllib.urlencode(url)
+            return []
             return self.sources(client.replaceHTMLCodes(url))
         except:
             pass

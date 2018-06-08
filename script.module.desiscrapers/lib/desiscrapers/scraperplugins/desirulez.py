@@ -6,11 +6,14 @@ from ..scraper import Scraper
 
 
 class DesiRulez(Scraper):
-    domains = ['desirulez.net', 'desirulez.me']
+    domains = ['desirulez.net', 'desirulez.me', 'desirulez.cc']
     name = "desirulez"
 
     def __init__(self):
-        self.base_link = 'http://www.desirulez.me'
+        self.base_link = 'http://www.desirulez.cc'
+        self.base_link_1 = 'http://www.desirulez.cc'
+        self.base_link_2 = 'http://www.desirulez.me'
+        self.base_link_3 = 'http://www.desirulez.net'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):
@@ -35,8 +38,16 @@ class DesiRulez(Scraper):
         try:
             srcs = []
 
-            url = url.replace(self.base_link, '')
-            result = client.request(self.base_link + '/' + url)
+            links = [self.base_link_1, self.base_link_2, self.base_link_3]
+            for base_link in links:
+                try:
+                    url = url.replace(self.base_link, '')
+                    result = client.request(self.base_link + '/' + url)
+                    if result == None :
+                        continue
+                    else : break
+                except:
+                    pass
 
             result = result.decode('iso-8859-1').encode('utf-8')
 
@@ -113,8 +124,19 @@ class DesiRulez(Scraper):
 
     def desiRulezCache(self):
         try :
-            base_link = 'http://www.desirulez.me/forums/20-Latest-Exclusive-Movie-HQ'
-            result = client.request(base_link)
+            links = [self.base_link_1, self.base_link_2, self.base_link_3]
+            for base_link in links:
+                try:
+                    base_link = '%s/forums/20-Latest-Exclusive-Movie-HQ' % base_link
+
+                    result = client.request(base_link, timeout=2)
+                    if result == None :
+                        continue
+                    else :
+                        break
+                except :
+                    pass
+
             result = result.decode('iso-8859-1').encode('utf-8')
             result = client.parseDOM(result, "li", attrs = {"class": "threadbit hot"})
             movies = []

@@ -46,7 +46,8 @@ class PutLocker(Scraper):
                 self.srcs.append({'source': 'Googlelink','parts' : '1', 'quality': res,'scraper': self.name,'url':link,'direct': False})
 
             return self.srcs
-        except:
+        except Exception as e:
+            logger.error('[%s] Exception : %s' % (self.__class__, e))
             pass
         return []
 

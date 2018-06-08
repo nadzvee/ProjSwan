@@ -143,8 +143,10 @@ try :
     from resources.lib.indexers import tvshows
     from resources.lib.indexers import episodes
     from resources.lib import sources
-    from aftershock.common import debrid, client
+    from aftershock.common import debrid, client, checker
     from resources.lib import resolvers
+
+    error = checker.check()
 
     #tvshows.tvshows().get(url, provider=provider, network=name)
 

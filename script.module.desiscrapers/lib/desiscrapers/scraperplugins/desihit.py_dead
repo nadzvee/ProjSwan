@@ -5,7 +5,7 @@ import urlparse
 from aftershock.common import cleantitle, client, logger
 from ..scraper import Scraper
 
-
+# Seems to be dead
 class DesiHit(Scraper):
     domains = ['desihit.net']
     name = "desihit"

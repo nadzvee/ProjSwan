@@ -6,7 +6,7 @@ from ..scraper import Scraper
 
 
 class DesiTashan(Scraper):
-    domains = ['desi-tashan.ms', 'desitashan.me']
+    domains = ['desi-tashan.me', 'desitashan.me']
     name = "desitashan"
 
     def __init__(self):

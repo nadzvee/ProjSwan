@@ -5,6 +5,8 @@ import urlparse
 from aftershock.common import cleantitle, client, logger
 from ..scraper import Scraper
 
+## CF COOKIE NOT WORKING
+
 
 class Crazy4AD(Scraper):
     domains = ['crazy4tv.com', 'crazy4ad.in']
@@ -22,6 +24,7 @@ class Crazy4AD(Scraper):
         try:
             url = {'imdb': imdb, 'title': title, 'year': year}
             url = urllib.urlencode(url)
+            return None
             return self.sources(client.replaceHTMLCodes(url))
         except:
             pass

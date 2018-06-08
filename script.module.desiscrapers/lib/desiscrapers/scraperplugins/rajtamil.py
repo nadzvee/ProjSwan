@@ -8,17 +8,17 @@ from ..scraper import Scraper
 
 
 class RajTamil(Scraper):
-    domains = ['hdbuffer.com']
+    domains = ['rajtamil.co']
     name = "rajtamil"
 
     def __init__(self):
-        self.base_link = 'http://www.rajtamil.com'
+        self.base_link = 'http://www.rajtamil.co'
         self.search_link = '/feed/?search=Search&s=%s'
         self.srcs = []
 
     def scrape_movie(self, title, year, imdb, debrid = False):
         try:
-            query = title
+            query = '%s %s' % (title, year)
             query = self.search_link % (urllib.quote_plus(query))
             query = urlparse.urljoin(self.base_link,query)
 
@@ -33,6 +33,7 @@ class RajTamil(Scraper):
 
                 if cleanedTitle in cleantitle.get(linkTitle):
                     url = client.parseDOM(item, "a", attrs={"rel": "nofollow"}, ret="href")[0]
+
                     break
 
             return self.sources(client.replaceHTMLCodes(url))

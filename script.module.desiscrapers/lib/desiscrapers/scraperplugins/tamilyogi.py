@@ -10,11 +10,11 @@ from ..scraper import Scraper
 
 
 class TamilYogi(Scraper):
-    domains = ['tamilyogi.cc']
+    domains = ['tamilyogi.fm', 'tamilyogi.cc']
     name = "tamilyogi"
 
     def __init__(self):
-        self.base_link = 'http://www.tamilyogi.cc'
+        self.base_link = 'http://www.tamilyogi.fm'
         self.search_link = '/feed/?search=Search&s=%s'
         self.srcs = []
 

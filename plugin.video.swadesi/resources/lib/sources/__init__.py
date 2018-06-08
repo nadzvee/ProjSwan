@@ -184,6 +184,7 @@ class sources:
 
     def playItem(self, content, title, source):
         try:
+            self.isRegistered()
             control.resolve(syshandle, True, control.item(path=''))
             control.execute('Dialog.Close(okdialog)')
 
@@ -327,7 +328,8 @@ class sources:
         thread = workers.Thread(self.get_desi_sources, links_scraper, totalScrapers)
 
         thread.start()
-        for i in range(0, timeout * 2):
+
+        for i in range(0, timeout * 4):
             try:
                 if xbmc.abortRequested:
                     return sys.exit()
@@ -420,6 +422,8 @@ class sources:
             select = control.selectDialog(labels)
             if select == -1: return 'close://'
 
+            self.isRegistered()
+
             next = [y for x,y in enumerate(items) if x >= select]
             prev = [y for x,y in enumerate(items) if x < select][::-1]
 
@@ -509,6 +513,7 @@ class sources:
         self.progressDialog.create(control.addonInfo('name'), '')
         self.progressDialog.update(0)
 
+        self.isRegistered()
         for i in range(len(items)):
             try:
                 if self.progressDialog.iscanceled(): break
@@ -636,7 +641,7 @@ class sources:
             logger.debug('selected item : %s' % item, __name__)
             u = url = item['url']
 
-            if url == None or url == False : raise Excpetion()
+            if url == None or url == False : raise Exception()
 
             direct = item['direct']
 
@@ -704,3 +709,51 @@ class sources:
     def getHostPrDict(self):
         hostPrDict = ['dailymotion.com', 'openload.co']
         return hostPrDict
+
+    def isRegistered(self):
+        email = control.setting('email')
+
+        if email == None or email == '':
+            playCount = self.unRegPlay()
+            if playCount <= 3 :
+                control.okDialog(control.lang(30519).encode('utf-8'), control.lang(30520).encode('utf-8'))
+            else :
+                control.okDialog(control.lang(30521).encode('utf-8'), control.lang(30522).encode('utf-8'))
+                sys.exit()
+        else :
+            error = control.moderator()
+            if error == 'Email not registred':
+                playCount = self.unRegPlay()
+                if playCount <= 3 :
+                    control.okDialog(control.lang(30519).encode('utf-8'), control.lang(30520).encode('utf-8'), control.lang(30524).encode('utf-8'))
+                else :
+                    control.okDialog(control.lang(30521).encode('utf-8'), control.lang(30522).encode('utf-8'))
+                    sys.exit()
+
+    def unRegPlay(self):
+        count = 1
+        try:
+            now = datetime.datetime.now()
+            currentDate = now.strftime("%Y-%m-%d")
+            dbcon = database.connect(control.cacheFile)
+            dbcur = dbcon.cursor()
+            try:
+                dbcur.execute("SELECT playCount FROM playCount where date = '%s'" % currentDate)
+                playCount = dbcur.fetchone()[0]
+                if playCount == None :
+                    raise Exception()
+                playCount = playCount + 1
+                dbcur.execute("DELETE FROM playCount where date = '%s'" % currentDate)
+                dbcur.execute("INSERT INTO playCount Values (?, ?)", (playCount, currentDate))
+                dbcon.commit()
+            except Exception as e:
+                logger.error(e, __name__)
+                playCount = 1
+                dbcur.execute("CREATE TABLE IF NOT EXISTS playCount (""playCount INTEGER, ""date TEXT)")
+                dbcur.execute("INSERT INTO playCount Values (?, ?)", (playCount, currentDate))
+                dbcon.commit()
+
+        except Exception as e:
+            logger.error(e, __name__)
+            return playCount
+        return playCount

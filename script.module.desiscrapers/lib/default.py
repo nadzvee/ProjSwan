@@ -22,6 +22,16 @@ from aftershock.common import cleantitle, logger, control
 
 movies = [
     {
+        'title': 'Veere Di Wedding',
+        'imdb': 'tt5842616',
+        'year': '2018'
+    },
+    {
+        'title': 'Padman',
+        'imdb': 'tt6620324',
+        'year': '2018'
+    },
+    {
         'title': 'Baadshaho',
         'imdb': '',
         'year': '2017'
@@ -42,11 +52,6 @@ movies = [
         'year': '2016'
     },
     {
-        'title': 'Dangal',
-        'imdb': 'tt5074352',
-        'year': '2016'
-    },
-    {
         'title': 'Welcome Back',
         'imdb': 'tt3159708',
         'year': '2015'
@@ -55,19 +60,11 @@ movies = [
 
 shows = [
     {
-        'title': "Bigg Boss 11",
-        'show_year': "",
-        'year': "",
-        'season': '',
-        'episode': '8th October 2017',
-        'imdb': 'threads/1085119-Bigg-Boss-Season-11-Weekend-Ka-Vaar-8th-October-2017-Watch-Online?s=6b53bae950baa63d1b4770050373e146',
-    },
-    {
         'title': "Yeh Rishta Kya Kehlata Hai",
         'show_year': "",
         'year': "",
         'season': '',
-        'episode': '7th July 2017',
+        'episode': '6th June 2018',
         'imdb': 'threads/1058940-Yeh-Rishta-Kya-Kehlata-Hai-27th-June-2017-Watch-Online',
     },
     {
@@ -123,7 +120,7 @@ def testManualMovies():
             year = movie['year']
             imdb = movie['imdb']
             logger.debug(" Scraping movie {} of {}".format(index, num_movies))
-            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['moviesgold'])
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['desihdmovies'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:
@@ -143,7 +140,7 @@ def testManualShows():
             imdb = show['imdb']
             tvdb = show.get('tvdb', '')
 
-            links_scraper = desiscrapers.scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=['yodesi', 'badtameezdil'])
+            links_scraper = desiscrapers.scrape_episode(title, show_year, year, season, episode, imdb, tvdb, host=['desitashan', 'badtameezdil'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:

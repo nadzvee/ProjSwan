@@ -9,6 +9,8 @@
 		<setting id="badtameezdil_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="bmoviez" type="lsep"/>
 		<setting id="bmoviez_enabled" type="bool" label="Enabled" default="true"/>
+		<setting label="cinevood" type="lsep"/>
+		<setting id="cinevood_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="crazy4ad" type="lsep"/>
 		<setting id="crazy4ad_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desihdmovies" type="lsep"/>
@@ -21,22 +23,16 @@
 		<setting id="desirulez_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="desiserials" type="lsep"/>
 		<setting id="desiserials_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="desitashan" type="lsep"/>
-		<setting id="desitashan_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="einthusan" type="lsep"/>
 		<setting id="einthusan_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="filmywap" type="lsep"/>
 		<setting id="filmywap_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="hdbuffer" type="lsep"/>
-		<setting id="hdbuffer_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="hindilinks4u" type="lsep"/>
 		<setting id="hindilinks4u_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="hindimoviesonline" type="lsep"/>
 		<setting id="hindimoviesonline_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="moviesgold" type="lsep"/>
 		<setting id="moviesgold_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="primewire" type="lsep"/>
-		<setting id="primewire_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="putlocker" type="lsep"/>
 		<setting id="putlocker_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="rajtamil" type="lsep"/>
@@ -49,8 +45,6 @@
 		<setting id="watchfree_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="world4u" type="lsep"/>
 		<setting id="world4u_enabled" type="bool" label="Enabled" default="true"/>
-		<setting label="wrmovies" type="lsep"/>
-		<setting id="wrmovies_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="yodesi" type="lsep"/>
 		<setting id="yodesi_enabled" type="bool" label="Enabled" default="true"/>
 		<setting label="yomovies" type="lsep"/>

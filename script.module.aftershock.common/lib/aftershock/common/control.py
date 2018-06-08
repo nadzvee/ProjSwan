@@ -203,6 +203,14 @@ def moderator():
 
     if not infoLabel('Container.PluginName') in netloc: sys.exit()
 
+    import checker
+    error = checker.check()
+
+    if not error == None:
+        okDialog(lang(30523).encode('utf-8') % error)
+        return error
+
+
 def idle():
     return execute('Dialog.Close(busydialog)')
 

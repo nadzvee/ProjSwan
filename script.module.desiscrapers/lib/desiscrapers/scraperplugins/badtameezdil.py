@@ -6,12 +6,12 @@ from ..scraper import Scraper
 
 
 class BadtameezDil(Scraper):
-    domains = ['badtameezdil.net']
+    domains = ['badtameezdilnet.com/']
     name = "badtameezdil"
 
     def __init__(self):
-        self.base_link = 'http://badtameezdil.net'
-        self.search_link = '/feed/?s=%s&submit=Search'
+        self.base_link = 'http://badtameezdilnet.com'
+        self.search_link = '/feed/?s=%s'
         self.srcs = []
 
     def scrape_episode(self, title, show_year, year, season, episode, imdb, tvdb, debrid = False):
