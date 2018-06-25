@@ -69,6 +69,9 @@ class CineVood(Scraper):
             for item in items:
                 try :
                     url = item
+                    if 'digibolly.se' in url :
+                        result = client.request(url)
+                        url = re.findall('<iframe src="(.+?)"',result, re.IGNORECASE)[0]
                     host = client.host(url)
                     srcs.append({'source': host, 'parts' : '1', 'quality': 'HD', 'scraper': self.name, 'url': url, 'direct':False})
                 except :

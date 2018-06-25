@@ -22,6 +22,11 @@ from aftershock.common import cleantitle, logger, control
 
 movies = [
     {
+        'title': 'Race 3',
+        'imdb': 'tt7431594',
+        'year': '2018'
+    },
+    {
         'title': 'Veere Di Wedding',
         'imdb': 'tt5842616',
         'year': '2018'
@@ -120,7 +125,7 @@ def testManualMovies():
             year = movie['year']
             imdb = movie['imdb']
             logger.debug(" Scraping movie {} of {}".format(index, num_movies))
-            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['desihdmovies'])
+            links_scraper = desiscrapers.scrape_movie(title, year, imdb, host=['cinevood'])
             links_scraper = links_scraper()
             for scraper_links in links_scraper:
                 if scraper_links:
