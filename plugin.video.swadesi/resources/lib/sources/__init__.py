@@ -715,7 +715,7 @@ class sources:
 
         if email == None or email == '':
             playCount = self.unRegPlay()
-            if playCount <= 3 :
+            if playCount <= 30000 :
                 control.okDialog(control.lang(30519).encode('utf-8'), control.lang(30520).encode('utf-8'))
             else :
                 control.okDialog(control.lang(30521).encode('utf-8'), control.lang(30522).encode('utf-8'))
@@ -724,7 +724,7 @@ class sources:
             error = control.moderator()
             if error == 'Email not registred':
                 playCount = self.unRegPlay()
-                if playCount <= 3 :
+                if playCount <= 30000 :
                     control.okDialog(control.lang(30519).encode('utf-8'), control.lang(30520).encode('utf-8'), control.lang(30524).encode('utf-8'))
                 else :
                     control.okDialog(control.lang(30521).encode('utf-8'), control.lang(30522).encode('utf-8'))
